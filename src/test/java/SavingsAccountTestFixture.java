@@ -26,7 +26,7 @@ public class SavingsAccountTestFixture {
                         List<Double> withdrawals,
                         List<Double> deposits,
                         double interest,
-                        boolean runMonthEnd,
+                        int runMonthEndNTimes,
                         double endBalance
     ) { }
 
@@ -52,7 +52,7 @@ public class SavingsAccountTestFixture {
             }
 
             // run month-end if desired and output register
-            if (scenario.runMonthEnd) {
+            if (scenario.runMonthEndNTimes > 0) {
                 sa.monthEnd();
                 for (Map.Entry<String, Double> entry : sa.getRegisterEntries()) {
                     logger.info("Register Entry -- {}: {}", entry.getKey(), entry.getValue());
@@ -99,9 +99,10 @@ public class SavingsAccountTestFixture {
         List<Double> wds = parseListOfAmounts(scenarioValues[1]);
         List<Double> deps = parseListOfAmounts(scenarioValues[2]);
         double intrst = Double.parseDouble(scenarioValues[3]);
-        double finalBalance = Double.parseDouble(scenarioValues[4]);
+        int MonthEndNTimes = Integer.parseInt(scenarioValues[4]);
+        double finalBalance = Double.parseDouble(scenarioValues[5]);
         TestScenario scenario = new TestScenario(
-                initialBalance, wds, deps, intrst, false, finalBalance
+                initialBalance, wds, deps, intrst, MonthEndNTimes, finalBalance
         );
         return scenario;
     }
